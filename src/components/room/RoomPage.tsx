@@ -32,6 +32,17 @@ export function RoomPage() {
     changeGameMode,
   } = useRoomSocket()
 
+  const searchParams = new URLSearchParams(window.location.search)
+  const portParam = searchParams.get('port')
+  const parsedPort = Number(portParam)
+
+
+  const signalingPort =
+    Number.isInteger(parsedPort) && parsedPort > 0 && parsedPort <= 65535
+      ? parsedPort
+      : 4000
+
+
   // const socketData = useRoomSocket()
 
   // const {
@@ -108,6 +119,7 @@ export function RoomPage() {
           socket={socket}
           onStopSession={stopSession}
           onChangeGameMode={changeGameMode}
+          signalingPort={signalingPort}
         />
       )}
     </div>

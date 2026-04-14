@@ -18,6 +18,7 @@ const GRACE_PERIOD = 8_000 // wait 8 s after mount before first retry
 interface LiveSessionProps {
   users: RoomUser[]
   roomData: RoomData
+  signalingPort: number
   socket: Socket | null
   onStopSession: () => void
   onChangeGameMode: (mode: string, num_cubes?: number) => void
@@ -27,9 +28,14 @@ export function LiveSession({
   users,
   roomData,
   socket,
+  signalingPort,
   onStopSession,
   onChangeGameMode,
 }: LiveSessionProps) {
+  console.log("🚀 ~ LiveSession ~ signalingPort:", signalingPort)
+
+
+
   const [
     streaming,
     connectionStatus,
@@ -228,7 +234,7 @@ export function LiveSession({
             initialSettings={{
               AutoPlayVideo: true,
               AutoConnect: true,
-              ss: 'ws://localhost:4000',
+              ss: `ws://localhost:${signalingPort}`,
               StartVideoMuted: true,
               HoveringMouse: true,
               WaitForStreamer: true,
@@ -362,8 +368,8 @@ export function LiveSession({
                     transition: 'background 0.2s',
                   }}
                   onMouseEnter={(e) =>
-                    (e.currentTarget.style.background =
-                      'rgba(255,255,255,0.18)')
+                  (e.currentTarget.style.background =
+                    'rgba(255,255,255,0.18)')
                   }
                   onMouseLeave={(e) =>
                     (e.currentTarget.style.background = 'rgba(255,255,255,0.1)')
@@ -449,9 +455,8 @@ export function LiveSession({
 
                   onChangeGameMode('Player', Number(cubeCount))
                 }}
-                className={`bg-blue-500 py-2 rounded fixed bottom-4 left-1/2 cursor-pointer -translate-x-1/2 px-3 flex items-center gap-2 ${
-                  isPendingModeChange ? 'opacity-70 cursor-not-allowed' : ''
-                }`}
+                className={`bg-blue-500 py-2 rounded fixed bottom-4 left-1/2 cursor-pointer -translate-x-1/2 px-3 flex items-center gap-2 ${isPendingModeChange ? 'opacity-70 cursor-not-allowed' : ''
+                  }`}
               >
                 {isPendingModeChange && <Loader2 size={16} className="animate-spin" />}
                 {isPendingModeChange ? 'Changing to Player Mode...' : 'Go to Player Mode'}
