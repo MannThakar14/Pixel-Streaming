@@ -31,7 +31,7 @@ function generateUUID(): string {
   })
 }
 
-const SOCKET_SERVER = 'http://192.168.1.41:7000'
+const SOCKET_SERVER = 'http://192.168.1.41:8000'
 // TODO: Remove this when done testing
 // const SOCKET_SERVER = 'https://19b7-122-172-240-193.ngrok-free.app/'
 
