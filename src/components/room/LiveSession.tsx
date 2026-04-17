@@ -238,7 +238,7 @@ export function LiveSession({
           />
         </div>
 
-        <div className="grid-overlay" style={{ zIndex: 10 }} />
+
 
         {/* ── CONNECTION STATUS OVERLAY ───────────────────── */}
         <AnimatePresence>
@@ -438,28 +438,32 @@ export function LiveSession({
                 className="px-3 py-2 rounded text-black bg-white"
               />
 
-              <button
-                disabled={isPendingModeChange || !cubeCount}
-                onClick={() => {
-                  if (!cubeCount || isPendingModeChange) return
 
-                  setIsPendingModeChange(true)
-
-                  socket?.emit('cube_setup_done', {
-                    count: cubeCount,
-                  })
-
-                  onChangeGameMode('Player', Number(cubeCount))
-                }}
-                className={`bg-blue-500 py-2 rounded fixed bottom-4 left-1/2 cursor-pointer -translate-x-1/2 px-3 flex items-center gap-2 ${isPendingModeChange ? 'opacity-70 cursor-not-allowed' : ''
-                  }`}
-              >
-                {isPendingModeChange && <Loader2 size={16} className="animate-spin" />}
-                {isPendingModeChange ? 'Changing to Player Mode...' : 'Go to Player Mode'}
-              </button>
             </div>
           </div>
         )} */}
+
+        {
+          roomData?.host_id && !isCubeSetupDone && (<button
+            disabled={isPendingModeChange || !cubeCount}
+            onClick={() => {
+              if (!cubeCount || isPendingModeChange) return
+
+              setIsPendingModeChange(true)
+
+              socket?.emit('cube_setup_done', {
+                count: cubeCount,
+              })
+
+              onChangeGameMode('Player', Number(cubeCount))
+            }}
+            className={`bg-blue-500 py-2 rounded fixed bottom-4 left-1/2 cursor-pointer -translate-x-1/2 px-3 flex items-center gap-2 ${isPendingModeChange ? 'opacity-70 cursor-not-allowed' : ''
+              }`}
+          >
+            {isPendingModeChange && <Loader2 size={16} className="animate-spin" />}
+            {isPendingModeChange ? 'Changing to Player Mode...' : 'Go to Player Mode'}
+          </button>)
+        }
 
         {/*  SPAWN BUTTON */}
         {/* {isCubeSetupDone && (
