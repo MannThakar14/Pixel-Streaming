@@ -20,6 +20,7 @@ export function RoomPage() {
     users,
     requests,
     sessionStarted,
+    playerPort,
     error,
     setError,
     createRoom,
@@ -31,17 +32,6 @@ export function RoomPage() {
     sessionStarting,
     changeGameMode,
   } = useRoomSocket()
-
-  const searchParams = new URLSearchParams(window.location.search)
-  const portParam = searchParams.get('port')
-  const parsedPort = Number(portParam)
-
-
-  const signalingPort =
-    Number.isInteger(parsedPort) && parsedPort > 0 && parsedPort <= 65535
-      ? parsedPort
-      : 4000
-
 
   // const socketData = useRoomSocket()
 
@@ -70,6 +60,8 @@ export function RoomPage() {
   // const roomData = MOCK_MODE ? dummyRoomData : socketData.roomData
   // const sessionStarted = MOCK_MODE ? true : socketData.sessionStarted
   // const requests = MOCK_MODE ? [] : socketData.requests
+
+  const signalingPort = playerPort ?? null
 
   return (
     <div className="room-container">
@@ -112,7 +104,7 @@ export function RoomPage() {
         )}
       </AnimatePresence>
 
-      {sessionStarted && roomData && (
+      {sessionStarted && roomData && playerPort !== null && (
         <LiveSession
           users={users}
           roomData={roomData}

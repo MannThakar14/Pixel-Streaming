@@ -18,7 +18,7 @@ const GRACE_PERIOD = 8_000 // wait 8 s after mount before first retry
 interface LiveSessionProps {
   users: RoomUser[]
   roomData: RoomData
-  signalingPort: number
+  signalingPort: number | null
   socket: Socket | null
   onStopSession: () => void
   onChangeGameMode: (mode: string, num_cubes?: number) => void
@@ -32,10 +32,6 @@ export function LiveSession({
   onStopSession,
   onChangeGameMode,
 }: LiveSessionProps) {
-  console.log("🚀 ~ LiveSession ~ signalingPort:", signalingPort)
-
-
-
   const [
     streaming,
     connectionStatus,
