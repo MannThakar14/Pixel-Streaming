@@ -409,14 +409,14 @@ export function LiveSession({
         </div>
 
         {/*  SPAWNED COUNT (TOP RIGHT) */}
-        {isCubeSetupDone && (
+        {/* {isCubeSetupDone && (
           <div className="absolute top-24 right-4 z-20 bg-black/40 px-4 py-2 rounded-lg text-white backdrop-blur">
             Spawned Cubes: {spawnedCount}
           </div>
-        )}
+        )} */}
 
         {/* HOST INPUT */}
-        {roomData.isHost && !isCubeSetupDone && (
+        {/* {roomData.isHost && !isCubeSetupDone && (
           <div className="absolute top-4 left-4 z-20 w-64">
             <div className="flex flex-col gap-4 bg-white/10 p-5 rounded-2xl text-white">
               <label>Number of Cubes</label>
@@ -459,10 +459,10 @@ export function LiveSession({
               </button>
             </div>
           </div>
-        )}
+        )} */}
 
         {/*  SPAWN BUTTON */}
-        {isCubeSetupDone && (
+        {/* {isCubeSetupDone && (
           <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30">
             <button
               onClick={() => {
@@ -479,7 +479,7 @@ export function LiveSession({
               Spawn Cubes
             </button>
           </div>
-        )}
+        )} */}
 
         {/* STOP BUTTON */}
         {roomData.isHost && (
