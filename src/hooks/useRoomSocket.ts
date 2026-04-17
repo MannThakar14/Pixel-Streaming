@@ -81,8 +81,6 @@ export function useRoomSocket(): UseRoomSocketReturn {
   const [sessionStarting, setSessionStarting] = useState<boolean>(false)
   const [playerPort, setPlayerPort] = useState<number | null>(null)
 
-  console.log('playerPort', playerPort)
-
   // Persist username & userId to sessionStorage
   useEffect(() => {
     sessionStorage.setItem('username', username)
@@ -91,6 +89,7 @@ export function useRoomSocket(): UseRoomSocketReturn {
 
   // Socket connection + event listeners
   useEffect(() => {
+
     const newSocket = io(SOCKET_SERVER)
 
     // TODO: Remove this when done testing
@@ -113,7 +112,7 @@ export function useRoomSocket(): UseRoomSocketReturn {
           const { room_id, host_id } = data
           setRoomData({ room_id, host_id, isHost: true })
           setStatus('in_room')
-          setUsers([{ socket_id: host_id, username: username || 'Host' }])
+          setUsers([{ socket_id: host_id, username: username ?? 'Host' }])
           break
         }
 
@@ -275,7 +274,7 @@ export function useRoomSocket(): UseRoomSocketReturn {
       newSocket.close()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user_id])
+  }, [user_id, username])
 
   // Mouse position tracking
   useEffect(() => {

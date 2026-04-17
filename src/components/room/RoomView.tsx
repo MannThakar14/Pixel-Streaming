@@ -72,7 +72,7 @@ export function RoomView({
       <UserList users={users} roomData={roomData} socket={socket} />
 
       {roomData.isHost && !sessionStarted && (
-        <button className={`primary ${sessionStarting ? 'disabled opacity-75 !cursor-not-allowed' : ''}`} style={{ marginTop: '2rem' }} disabled={sessionStarting}  onClick={sessionStarting ? undefined : onStartSession}>
+        <button className={`primary ${sessionStarting ? 'disabled opacity-75 !cursor-not-allowed' : ''}`} style={{ marginTop: '2rem' }} disabled={sessionStarting} onClick={sessionStarting ? undefined : onStartSession}>
           Start Live Session
           {sessionStarting && <span className="spinner ml-2"></span>}
         </button>
