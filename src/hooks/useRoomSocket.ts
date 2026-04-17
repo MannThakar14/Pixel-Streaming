@@ -31,7 +31,7 @@ function generateUUID(): string {
   })
 }
 
-const SOCKET_SERVER = 'http://192.168.1.41:7000'
+const SOCKET_SERVER = 'http://192.168.1.41:8000'
 // TODO: Remove this when done testing
 // const SOCKET_SERVER = 'https://19b7-122-172-240-193.ngrok-free.app/'
 
@@ -49,6 +49,7 @@ interface UseRoomSocketReturn {
   positions: PositionMap
   sessionStarted: boolean
   sessionStarting: boolean
+  playerPort: number | null
   error: string
   setError: (v: string) => void
   createRoom: () => void
@@ -78,6 +79,9 @@ export function useRoomSocket(): UseRoomSocketReturn {
   const [users, setUsers] = useState<RoomUser[]>([])
   const [sessionStarted, setSessionStarted] = useState<boolean>(false)
   const [sessionStarting, setSessionStarting] = useState<boolean>(false)
+  const [playerPort, setPlayerPort] = useState<number | null>(null)
+
+  console.log('playerPort', playerPort)
 
   // Persist username & userId to sessionStorage
   useEffect(() => {
@@ -242,6 +246,13 @@ export function useRoomSocket(): UseRoomSocketReturn {
           break
         }
 
+        case 'fe_listenport_updated': {
+          const { player_port, ip, message } = data
+          console.log('[Socket] fe_listenport_updated:', { player_port, ip, message })
+          setPlayerPort(player_port)
+          break
+        }
+
         case 'position_updated': {
           const { socket_id, x, y } = data
           setPositions((prev) => ({ ...prev, [socket_id]: { x, y } }))
@@ -400,6 +411,7 @@ export function useRoomSocket(): UseRoomSocketReturn {
     requests,
     positions,
     sessionStarted,
+    playerPort,
     error,
     setError,
     createRoom,

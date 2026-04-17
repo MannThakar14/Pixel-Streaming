@@ -20,6 +20,7 @@ export function RoomPage() {
     users,
     requests,
     sessionStarted,
+    playerPort,
     error,
     setError,
     createRoom,
@@ -59,6 +60,8 @@ export function RoomPage() {
   // const roomData = MOCK_MODE ? dummyRoomData : socketData.roomData
   // const sessionStarted = MOCK_MODE ? true : socketData.sessionStarted
   // const requests = MOCK_MODE ? [] : socketData.requests
+
+  const signalingPort = playerPort ?? null
 
   return (
     <div className="room-container">
@@ -101,13 +104,14 @@ export function RoomPage() {
         )}
       </AnimatePresence>
 
-      {sessionStarted && roomData && (
+      {sessionStarted && roomData && playerPort !== null && (
         <LiveSession
           users={users}
           roomData={roomData}
           socket={socket}
           onStopSession={stopSession}
           onChangeGameMode={changeGameMode}
+          signalingPort={signalingPort}
         />
       )}
     </div>
